@@ -56,4 +56,5 @@ def run_with_policy(env, policy, episodes=5):
 if __name__ == "__main__":
     env = GridWorldEnv(render_mode="human", size=5)
     V, policy = value_iteration(env)
+    np.save("value_iteration_policy.npy", policy)
     run_with_policy(env, policy)

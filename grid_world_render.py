@@ -4,7 +4,7 @@ import gymnasium as gym
 from environment.grid_world import GridWorldEnv  # adjust import if needed
 
 # Now you can create it
-env = gym.make("Grid-World-v0", size=10, render_mode="human", max_episode_steps=50)
+env = gym.make("Grid-World-v0", size=5, render_mode="human", max_episode_steps=50)
 obs, info = env.reset()
 done = False
 while not done:

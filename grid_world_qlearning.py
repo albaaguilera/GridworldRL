@@ -1,27 +1,27 @@
 import time
 import numpy as np
-from environment.grid_world import GridWorldEnv  # adjust import if needed
+from environment.grid_world import GridWorldEnv  
 
 # Create the environment in human render mode to visualize movements.
 env = GridWorldEnv(render_mode="human", size=5)
 num_actions = env.action_space.n
 
-# Helper: represent state as a tuple (agent_x, agent_y, target_x, target_y)
+# State as a tuple (agent_x, agent_y, target_x, target_y)
 def get_state(obs):
     return (obs["agent"][0], obs["agent"][1], obs["target"][0], obs["target"][1])
 
-# Initialize Q-table: dimensions: agent_x, agent_y, target_x, target_y, action.
+# Initialize Q-table: dimensions: states x actions.
 q_table = np.zeros((env.size, env.size, env.size, env.size, num_actions))
 
-# Q-learning hyperparameters (adjusted for faster learning)
+# Q-learning hyperparameters 
 num_episodes = 200
-alpha = 0.2      # Increased learning rate (default was 0.1)
-gamma = 0.99     # Discount factor remains the same
-epsilon = 0.7    # Start with high exploration
+alpha = 0.2      # Learning rate 
+gamma = 0.99     # Discount factor 
+epsilon = 0.5    # Exploration rate
 min_epsilon = 0.1
 decay_rate = 0.001  # Epsilon decay rate
 
-max_steps_per_episode = 100  # Prevent episodes from running forever
+max_steps_per_episode = 100  
 rewards_all_episodes = []
 
 for episode in range(1, num_episodes + 1):
@@ -69,4 +69,5 @@ for r in rewards_per_thousand_ep:
     print(count, ":", str(sum(r) / 10))
     count += 1000
 
+np.save("q_table.npy", q_table)
 env.close()

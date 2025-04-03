@@ -4,16 +4,14 @@ import pygame
 import gymnasium as gym
 from gymnasium import spaces
 
-
 class Actions(Enum):
     RIGHT = 0
     UP = 1
     LEFT = 2
     DOWN = 3
 
-
 class GridWorldEnv(gym.Env):
-    metadata = {"render_modes": ["human", "ansi"], "render_fps": 4}
+    metadata = {"render_modes": ["human", "ansi", "rgb_array"], "render_fps": 4}
 
     def __init__(self, render_mode=None, size=5):
         self.size = size  # The size of the square grid
