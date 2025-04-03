@@ -8,7 +8,7 @@ Compared **Value Iteration** (known transitions and rewards) with **Q-learning**
 
 <table>
 <tr>
-<td align="center"><strong>Value Iteration</strong><br><img src="gifs/valueiter.gif" width="300"/></td>
+<td align="center"><strong>Value Iteration</strong><br><img src="gifs/value_iteration.gif" width="300"/></td>
 
 </tr>
 </table>
