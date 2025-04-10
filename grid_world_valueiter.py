@@ -43,6 +43,7 @@ def run_with_policy(env, policy, episodes=5):
         state = (obs["agent"][0], obs["agent"][1], obs["target"][0], obs["target"][1])
         done = False
         steps = 0
+        cummulative_reward = 0
         print(f"\nEpisode {ep + 1}")
         while not done:
             action = policy[state]
@@ -51,6 +52,7 @@ def run_with_policy(env, policy, episodes=5):
             steps += 1
             if done:
                 print(f"Reached target in {steps} steps.")
+                print(f"Cummulative reward: {cummulative_reward + reward}")
     env.close()
 
 if __name__ == "__main__":

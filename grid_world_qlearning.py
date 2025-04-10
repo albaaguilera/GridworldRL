@@ -20,6 +20,9 @@ min_epsilon = 0.01
 decay_rate = 0.01  # Epsilon decay rate
 
 max_steps_per_episode = 150  
+
+rollout= 50
+
 rewards_all_episodes = []
 
 for episode in range(1, num_episodes + 1):
@@ -58,6 +61,10 @@ for episode in range(1, num_episodes + 1):
     
     rewards_all_episodes.append(total_episode_reward)
 
+    if episode % rollout == 0 or episode == num_episodes - 1:
+        np.save(f"data/qtable_ep{episode}.npy", q_table)
+        print(f"Saved Q-table at episode {episode}")
+
     if episode % 10 == 0:
         print(f"Episode {episode} finished in {steps} steps with reward {total_episode_reward}.")
 
@@ -67,7 +74,7 @@ for r in rewards_per_thousand_ep:
     print(count, ":", str(sum(r) / 10))
     count += 1000
 
-np.save("q_table.npy", q_table)
+np.save("data/q_table.npy", q_table)
 import matplotlib.pyplot as plt
 
 # SMOOTH REWARD AND EPSILONS
