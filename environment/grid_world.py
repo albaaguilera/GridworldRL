@@ -65,6 +65,9 @@ class GridWorldEnv(gym.Env):
                 self._agent_location - self._target_location, ord=1
             )
         }
+    # def get_state(self):
+    #     return (self._agent_location[0] * self.size + self._agent_location[1]) * self.size**2 + \
+    #         (self._target_location[0] * self.size + self._target_location[1])
     
     def reset(self, seed=None, options=None):
         super().reset(seed=seed)
@@ -72,15 +75,16 @@ class GridWorldEnv(gym.Env):
         # Fixed agent location
         self._agent_location =  np.array([0, 0])  #self.np_random.integers(0, self.size, size=2, dtype=int)
 
-        # Fixed target location
-        self._target_location = np.array([self.size - 1, self.size - 1], dtype=int)
+        # # Fixed target location
+        # self._target_location = np.array([self.size - 1, self.size - 1], dtype=int)
 
-        """ # Random target's location
+        # Random target's location
         self._target_location = self._agent_location
         while np.array_equal(self._target_location, self._agent_location):
             self._target_location = self.np_random.integers(
                 0, self.size, size=2, dtype=int
-            )"""
+            )
+
         self.total_reward = 0
         observation = self._get_obs()
         info = self._get_info()
@@ -102,7 +106,8 @@ class GridWorldEnv(gym.Env):
         new_distance = np.linalg.norm(self._agent_location - self._target_location, ord=1)
 
         terminated = np.array_equal(self._agent_location, self._target_location)
-        reward = 10 if terminated else old_distance - new_distance  # +10 on reaching target
+        reward = 10 if terminated else old_distance - new_distance -0.1 # +10 on reaching target
+        # Added small penalty to avoid wandering aroung
         #reward = 1 if terminated else 0  # BEFORE: Binary sparse rewards
         self.total_reward += reward
         observation = self._get_obs()
