@@ -1,6 +1,8 @@
 # GridworldRL
 Single-agent and Multi-agent Reinforcement Learning in a simple Grid-world environment. 
 
+Our agent, represented as a blue dot, needs to explore the environment to find a target located randomly each time. By trial and error, the agent finds the most optimal way to find the target.
+
 Compared **Value Iteration** (known transitions and rewards: model-based) with **Q-learning** (unknown transitions and rewards: model-free).
 
 | **Feature**                         | **Value Iteration**                                                                                                                                     | **Q-learning**                                                                                          |
@@ -35,12 +37,4 @@ Compared **Value Iteration** (known transitions and rewards: model-based) with *
 
 ## 🧪 Training Results
 
-| Metric                        | Value Iteration | Q-learning |
-|-------------------------------|-----------------|------------|
-| Episodes to convergence       | *1*             | *~120*     |
-| Average reward                | *1.0*           | *0.9*      |
-| Average steps to goal         | *~6*            | *~6.8*     |
-
-Cummulative reward : average cumulative reward per episode over time
-Convergence time or episodes to convergence
-steps per episode
+![Training Results](data/training_results.png)
