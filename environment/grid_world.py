@@ -67,19 +67,21 @@ class GridWorldEnv(gym.Env):
         }
     
     def reset(self, seed=None, options=None):
-        # We need the following line to seed self.np_random
         super().reset(seed=seed)
 
-        # Choose the agent's location uniformly at random
-        self._agent_location = self.np_random.integers(0, self.size, size=2, dtype=int)
+        # Fixed agent location
+        self._agent_location =  np.array([0, 0])  #self.np_random.integers(0, self.size, size=2, dtype=int)
 
-        # We will sample the target's location randomly until it does not coincide with the agent's location
+        # Fixed target location
+        self._target_location = np.array([self.size - 1, self.size - 1], dtype=int)
+
+        """ # Random target's location
         self._target_location = self._agent_location
         while np.array_equal(self._target_location, self._agent_location):
             self._target_location = self.np_random.integers(
                 0, self.size, size=2, dtype=int
-            )
-
+            )"""
+        self.total_reward = 0
         observation = self._get_obs()
         info = self._get_info()
 
@@ -88,16 +90,21 @@ class GridWorldEnv(gym.Env):
 
         return observation, info
     
+
     def step(self, action):
-        # Map the action (element of {0,1,2,3}) to the direction we walk in
+        old_distance = np.linalg.norm(self._agent_location - self._target_location, ord=1)
+
         direction = self._action_to_direction[action]
-        # We use `np.clip` to make sure we don't leave the grid
         self._agent_location = np.clip(
             self._agent_location + direction, 0, self.size - 1
         )
-        # An episode is done iff the agent has reached the target
+
+        new_distance = np.linalg.norm(self._agent_location - self._target_location, ord=1)
+
         terminated = np.array_equal(self._agent_location, self._target_location)
-        reward = 1 if terminated else 0  # Binary sparse rewards
+        reward = 10 if terminated else old_distance - new_distance  # +10 on reaching target
+        #reward = 1 if terminated else 0  # BEFORE: Binary sparse rewards
+        self.total_reward += reward
         observation = self._get_obs()
         info = self._get_info()
 
@@ -105,6 +112,7 @@ class GridWorldEnv(gym.Env):
             self._render_frame()
 
         return observation, reward, terminated, False, info
+
 
     def render(self):
         if self.render_mode == "rgb_array":
@@ -128,7 +136,7 @@ class GridWorldEnv(gym.Env):
             self.window_size / self.size
         )  # The size of a single grid square in pixels
 
-        # First we draw the target
+        # Draw the target
         pygame.draw.rect(
             canvas,
             (255, 0, 0),
@@ -137,7 +145,7 @@ class GridWorldEnv(gym.Env):
                 (pix_square_size, pix_square_size),
             ),
         )
-        # Now we draw the agent
+        # Draw the agent
         pygame.draw.circle(
             canvas,
             (0, 0, 255),
@@ -145,7 +153,7 @@ class GridWorldEnv(gym.Env):
             pix_square_size / 3,
         )
 
-        # Finally, add some gridlines
+        # Add some gridlines
         for x in range(self.size + 1):
             pygame.draw.line(
                 canvas,
@@ -161,12 +169,17 @@ class GridWorldEnv(gym.Env):
                 (pix_square_size * x, self.window_size),
                 width=3,
             )
+        # Add this to the _render_frame method after drawing the grid
+        font = pygame.font.SysFont(None, 36)
+        text = font.render(f"Total reward: {self.total_reward:.2f}", True, (0, 0, 0))
+        canvas.blit(text, (10, 10))
 
         if self.render_mode == "human":
             # The following line copies our drawings from `canvas` to the visible window
             self.window.blit(canvas, canvas.get_rect())
             pygame.event.pump()
             pygame.display.update()
+
 
             # We need to ensure that human-rendering occurs at the predefined framerate.
             # The following line will automatically add a delay to keep the framerate stable.
