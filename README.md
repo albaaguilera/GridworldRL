@@ -1,9 +1,9 @@
 # GridworldRL
-Single-agent and Multi-agent Reinforcement Learning in a simple Grid-world environment. 
+Single-agent Reinforcement Learning in a simple Grid-world environment. 
 
 Our agent, represented as a blue dot, needs to explore the environment to find a target located randomly each time. By trial and error, the agent finds the most optimal way to find the target.
 
-Compared **Value Iteration** (known transitions and rewards: model-based) with **Q-learning** (unknown transitions and rewards: model-free).
+We compare **Value Iteration** (known transitions and rewards: model-based) with **Q-learning** (unknown transitions and rewards: model-free).
 
 | **Feature**                         | **Value Iteration**                                                                                                                                     | **Q-learning**                                                                                          |
 |-------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------|

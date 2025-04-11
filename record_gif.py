@@ -106,7 +106,7 @@ def generate_learning_gif(gif_name="qlearning_summary.gif", rollout_dir="data", 
         all_frames.extend(frames)
 
     pygame.quit()
-    imageio.mimsave(f"gifs/{gif_name}", all_frames, duration=0.1)
+    imageio.mimsave(f"gifs/{gif_name}", all_frames, duration=0.8)
     print(f"GIF saved as gifs/{gif_name}")
 
 if __name__ == "__main__":
