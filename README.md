@@ -19,7 +19,7 @@ We compare **Value Iteration** (known transitions and rewards: model-based) with
 
 <table>
 <tr>
-<td align="center"><strong>Value Iteration</strong><br><img src="output/valueiter_summary.gif" width="300"/></td>
+<td align="center"><strong>Value Iteration</strong><br><img src="output/valueiter_summary_slow.gif" width="300"/></td>
 <td align="center"><strong>Q-learning</strong><br><img src="output/qlearning_summary_slow.gif" width="300"/></td>
 </tr>
 </table>
