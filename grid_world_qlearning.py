@@ -75,6 +75,7 @@ for r in rewards_per_thousand_ep:
     count += 1000
 
 np.save("data/q_table.npy", q_table)
+
 import matplotlib.pyplot as plt
 
 # SMOOTH REWARD AND EPSILONS

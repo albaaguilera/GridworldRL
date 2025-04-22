@@ -175,6 +175,7 @@ class GridWorldEnv(gym.Env):
                 width=3,
             )
         # Add this to the _render_frame method after drawing the grid
+        pygame.font.init()
         font = pygame.font.SysFont(None, 36)
         text = font.render(f"Total reward: {self.total_reward:.2f}", True, (0, 0, 0))
         canvas.blit(text, (10, 10))
